@@ -20,11 +20,11 @@ def post(request):
             return redirect('/lotto')
 
 def detail(request):
-    key = request.GET['lotto_num']
-    GuessNumbers.objects.get(id=key)
+    key = request.GET['lotto_number']
+    lotto = GuessNumbers.objects.get(id=key)
     return render(request,'lotto/detail.html', {'lotto':lotto})
 
 def detail2(request, num):
     lotto = GuessNumbers.objects.get(id=num)
     print(lotto)
-    return render(request, 'lotto/detail2.html', {'lotto':lotto})
+    return render(request, 'lotto/detail.html', {'lotto':lotto})
