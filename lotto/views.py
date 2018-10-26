@@ -1,4 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from lotto.form import PostForm
 from .models import *
@@ -28,3 +30,25 @@ def detail2(request, num):
     lotto = GuessNumbers.objects.get(id=num)
     print(lotto)
     return render(request, 'lotto/detail.html', {'lotto':lotto})
+
+def join(request):
+    if request.method == 'GET':
+        return render(request,'lotto/join.html',{})
+    else:
+        id = request.POST['id']
+        pw = request.POST['pw']
+        name = request.POST['name']
+        #실제 회원가입 - Member에 테이블 데이터 입력
+        m = Member(id=id, pw=pw, name=name)
+        m.save()
+        return render(request, 'lotto/join_result.html', {'id':id, 'name':name})
+@csrf_exempt
+def id_check(request):
+    id = request.POST['id']
+    try:
+        Member.objects.get(id=id)
+    except Member.DoesNotExist as e:
+        pass
+        return HttpResponse('가입가능')
+    else:
+        return HttpResponse('가입불가')
