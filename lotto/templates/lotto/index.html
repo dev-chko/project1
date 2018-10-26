@@ -6,8 +6,15 @@
 </div>
 {% for lotto in lottos %}
 <div class="container lotto">
-     <h2>{{ lotto.name }}</h2>
-     <p>{{ lotto.update_date }}</p>
+     <h2>
+         <a href="detail?lotto_number={{lotto.id}}">
+             {{ lotto.name }}
+         </a>
+     </h2>
+     <p>
+         <a href="detail/{{lotto.id}}"{{lotto.update_date}}
+        </a>
+     </p>
      <p>{{ lotto.lottos }}</p>
 </div>
 {% endfor %}
